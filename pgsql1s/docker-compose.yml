@@ -5,9 +5,9 @@ services:
       context: ./
       dockerfile: Dockerfile
       args:
-        TZ: "[TimeZone]"
-        PASS: "[PASS]"
-        SHEDULE: "[SHEDULE]"
+        TZ: "${TZ}"
+        PASS: "${PASS}"
+        SHEDULE: "${SHEDULE}"
     image: pgsql1s
     container_name: pgsql1s
     ports:
@@ -17,3 +17,10 @@ services:
       - /_1s/bd:/var/lib/pgpro/1c-15/data
       - /_1s/backup:/backup
     restart: always
+
+
+
+
+
+
+
