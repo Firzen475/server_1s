@@ -15,3 +15,6 @@ sed -i 's/local   all             all                                     peer/l
 /opt/pgpro/1c-15/bin/pg-setup service start
 /opt/pgpro/1c-15/bin/psql -U postgres -c "ALTER USER postgres WITH PASSWORD '${PASS}';"
 cron -f
+
+
+
