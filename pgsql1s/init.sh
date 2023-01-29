@@ -3,11 +3,12 @@
 [ -d /_1s/bd/ ] || mkdir -p /_1s/bd
 [ -d /_1s/root/ ] || mv ./root/ /_1s/
 
-[ -f ./.env ] || touch ./.env && \
-  [ -f ./.env ] || echo 'TZ="Asia/Yekaterinburg"     # Europe/Moscow Asia/Yekaterinburg' >> ./.env && \
-  [ -f ./.env ] || echo 'PASS="password"        # Пароль пользователя postgres' >> ./.env && \
-  [ -f ./.env ] || echo 'SHEDULE="0 0 * * *"  # Расписание в формате cron * * * * *' >> ./.env 
-
+if [[ ! -f ./.env ]]; then
+  touch ./.env && \
+  echo 'TZ="Asia/Yekaterinburg"     # Europe/Moscow Asia/Yekaterinburg' >> ./.env && \
+  echo 'PASS="password"        # Пароль пользователя postgres' >> ./.env && \
+  echo 'SHEDULE="0 0 * * *"  # Расписание в формате cron * * * * *' >> ./.env
+fi
 
 
 
