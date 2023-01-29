@@ -16,6 +16,11 @@ services:
       - /_1s/root:/root
       - /_1s/bd:/var/lib/pgpro/1c-15/data
       - /_1s/backup:/backup
+    healthcheck:
+      test: ["CMD-SHELL", "/pg_isready"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     restart: always
 
 
