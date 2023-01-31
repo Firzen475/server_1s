@@ -1,7 +1,7 @@
 #!/bin/bash
 [ -d /_1s/backup/ ] || mkdir -p /_1s/backup
-[ -d /_1s/bd/ ] || mkdir -p /_1s/bd
-[ -d /_1s/root/ ] || mv ./root/ /_1s/
+[ -d /_1s/database/ ] || mkdir -p /_1s/database
+[ -d /_1s/root_pgsql1s/ ] || mv ./root /_1s/root_pgsql1s
 
 if [[ ! -f ./.env ]]; then
   touch ./.env && \
