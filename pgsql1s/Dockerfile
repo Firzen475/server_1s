@@ -2,13 +2,12 @@ FROM ubuntu:20.04 as pgsql1s
 
 ARG TZ Europe/Moscow
 ENV TZ $TZ
-ARG SHEDULE  * * * * *
-ENV SHEDULE $SHEDULE
+ENV SHEDULE "0 0 * * *"
 ARG PASS pass
 ENV PASS $PASS
 WORKDIR /root
 SHELL ["/bin/bash", "-c"]
-RUN apt update && apt install -y wget cron tzdata && \
+RUN apt update && apt install -y wget cron tzdata gosu && \
         ln -sf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone && \
         dpkg-reconfigure -f noninteractive tzdata && \
         echo "${SHEDULE} chmod +x /root/run.sh && /bin/bash /root/run.sh" >> /mycron | crontab -u root /mycron && crontab -l && \
