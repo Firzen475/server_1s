@@ -1,0 +1,136 @@
+version: "3.7"
+services:
+  srv1s:
+    build:
+      context: ./srv1s
+      dockerfile: Dockerfile
+      args:
+        TZ: ${TZ}
+    image: srv1s
+    container_name: srv1s
+    hostname: srv1s
+    volumes:
+      - root_srv1s:/root/
+      - srvConfig:/srvConfig/
+      - apacheConf:/etc/apache2/sites-available/
+      - apacheDir:/var/www/1c/
+    ports:
+      - 1540:1540
+      - 1541:1541
+      - 1560-1591:1560-1591
+      - 443:443
+    networks:
+      back:
+        ipv4_address: 172.16.238.3
+    healthcheck:
+      test: ["CMD", "/bin/bash", "/root/healthcheck.sh" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: always
+    depends_on:
+      - pgsql1s
+      - lic1s
+
+  pgsql1s:
+    build:
+      context: ./pgsql1s
+      dockerfile: Dockerfile
+      args:
+        TZ: "${TZ}"
+        PASS: "${PASS}"
+    image: pgsql1s
+    hostname: pgsql1s
+    container_name: pgsql1s
+    environment:
+      - SHEDULE=${SHEDULE}
+    networks:
+      back:
+        ipv4_address: 172.16.238.2
+    volumes:
+      - root_pgsql1s:/root
+      - database:/database
+      - backup:/backup
+    healthcheck:
+      test: ["CMD", "/bin/bash", "/root/healthcheck.sh" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: always
+    depends_on:
+      - lic1s
+
+  lic1s:
+    build:
+      context: ./lic
+      dockerfile: Dockerfile
+    image: lic1s
+    container_name: lic1s
+    hostname: lic1s
+    privileged: true
+    networks:
+      back:
+        ipv4_address: 172.16.238.4
+    healthcheck:
+      test: ["CMD", "/bin/bash", "/root/healthcheck.sh" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: always
+
+networks:
+  back:
+    driver: bridge
+    ipam:
+     config:
+       - subnet: 172.16.238.0/24
+
+volumes:
+   root_srv1s:
+      driver: local
+      driver_opts:
+        type: 'none'
+        o: bind
+        device: "/_1s/root_srv1s/"
+   srvConfig:
+      driver: local
+      driver_opts:
+        type: 'none'
+        o: bind
+        device: "/_1s/srvConfig/"
+   apacheConf:
+      driver: local
+      driver_opts:
+        type: 'none'
+        o: bind
+        device: "/_1s/apacheConf/"
+   apacheDir:
+      driver: local
+      driver_opts:
+        type: 'none'
+        o: bind
+        device: "/_1s/apacheDir/"
+        
+   root_pgsql1s:
+      driver: local
+      driver_opts:
+        type: 'none'
+        o: bind
+        device: "/_1s/root_pgsql1s/"
+   database:
+      driver: local
+      driver_opts:
+        type: 'none'
+        o: bind
+        device: "/_1s/database/"
+   backup:
+      driver: local
+      driver_opts:
+        type: 'none'
+        o: bind
+        device: "/_1s/backup/"
+
+
+
+
+
