@@ -7,25 +7,48 @@ services:
       args:
         TZ: "${TZ}"
         PASS: "${PASS}"
-        SHEDULE: "${SHEDULE}"
     image: pgsql1s
+    hostname: pgsql1s
     container_name: pgsql1s
-    ports:
-      - "5432:5432"
+    environment:
+      - SHEDULE=${SHEDULE}
+    networks:
+      - host
     volumes:
-      - /_1s/root:/root
-      - /_1s/bd:/var/lib/pgpro/1c-15/data
-      - /_1s/backup:/backup
+      - root_pgsql1s:/root
+      - database:/database
+      - backup:/backup
     healthcheck:
-      test: ["CMD-SHELL", "/pg_isready"]
+      test: ["CMD", "/bin/bash", "/root/healthcheck.sh" ]
       interval: 10s
       timeout: 5s
       retries: 5
     restart: always
 
+networks:
+  host:
+    name: host
+    external: true
 
-
-
+volumes:
+   root_pgsql1s:
+      driver: local
+      driver_opts:
+        type: 'none'
+        o: bind
+        device: "/_1s/root_pgsql1s/"
+   database:
+      driver: local
+      driver_opts:
+        type: 'none'
+        o: bind
+        device: "/_1s/database/"
+   backup:
+      driver: local
+      driver_opts:
+        type: 'none'
+        o: bind
+        device: "/_1s/backup/"
 
 
 
