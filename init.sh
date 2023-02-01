@@ -1,8 +1,8 @@
 #!/bin/bash
-[ -d /_1s/root_srv1s/ ] || mv ./root /_1s/root_srv1s
-[ -d /_1s/srvConfig/ ] || mv ./root /_1s/srvConfig
-[ -d /_1s/apacheConf/ ] || mv ./root /_1s/apacheConf
-[ -d /_1s/apacheDir/ ] || mv ./root /_1s/apacheDir
+[ -d /_1s/root_srv1s/ ] || mkdir -p /_1s/root_srv1s
+[ -d /_1s/srvConfig/ ] || mkdir -p /_1s/srvConfig
+[ -d /_1s/apacheConf/ ] || mkdir -p /_1s/apacheConf
+[ -d /_1s/apacheDir/ ] || mkdir -p /_1s/apacheDir
 
 [ -d /_1s/backup/ ] || mkdir -p /_1s/backup
 [ -d /_1s/database/ ] || mkdir -p /_1s/database
