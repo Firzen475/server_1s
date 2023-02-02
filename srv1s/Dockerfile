@@ -18,3 +18,12 @@ RUN apt update && DEBIAN_FRONTEND=noninteractive apt install -y tzdata fonts-lib
 VOLUME [ "/root", "/home/usr1cv8/.1cv8/", "/var/www/1c/", "/etc/apache2/sites-available/" ]
 EXPOSE 1540 1541 1560:1591 80 443
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+
+
+
+
+
+
+
+
+
