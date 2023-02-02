@@ -49,8 +49,32 @@
     ├── root_srv1s  
     │   └── healthcheck.sh  
     └── srv1s.conf  
-```
-
+```  
+#### Дерево хранилищь  
+```bash
+/_1s/
+├── apacheConf
+│   └── default-ssl.conf
+├── apacheDir
+│   ├── database1
+│   │   └── default.vrd
+│   ├── database2
+│   │   └── default.vrd
+│   └── database3
+│       └── default.vrd
+├── backup
+├── database
+├── root_pgsql1s
+│   ├── backup.sh
+│   ├── healscheck.sh
+│   ├── healthcheck.sh
+│   └── run.sh
+├── root_srv1s
+│   ├── healthcheck.sh
+│   ├── srv1s.crt
+│   └── srv1s.key
+└── srvConfig
+```  
 
 ## База данных  
 #### Подготовка  
