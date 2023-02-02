@@ -1,0 +1,23 @@
+version: "3.7"
+services:
+  lic1s:
+    build:
+      context: ./lic
+      dockerfile: Dockerfile
+    image: lic1s
+    container_name: lic1s
+    hostname: lic1s
+    privileged: true
+    networks:
+      - host
+    healthcheck:
+      test: ["CMD", "/bin/bash", "/root/healthcheck.sh" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: always
+
+networks:
+  host:
+    name: host
+    external: true
