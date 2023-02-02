@@ -127,8 +127,8 @@ ___
 ```
 3. Настройка файлов [default.vrd](./srv1s/apacheDir/database1/default.vrd) и изменить имя родительсой папки на имя публикуемой базы как в пункте 2.  
 4. Исправить файл сконфигурации [srv1s.conf](./srv1s/srv1s.conf).  
-5. Сгенерировать файлы сертификатов
-```openssl req -x509 -nodes -days 4000 -newkey rsa:2048 -keyout /_1s/root_srv1s/srv1s.key -out /_1s/root_srv1s/srv1s.crt -config ./srv1s/srv1s.conf```
+5. Сгенерировать файлы сертификатов  
+```openssl req -x509 -nodes -days 4000 -newkey rsa:2048 -keyout /_1s/root_srv1s/srv1s.key -out /_1s/root_srv1s/srv1s.crt -config ./srv1s/srv1s.conf```  
 7. Выполнить [init.sh](./srv1s/init.sh)
 ```cd ./srv1s && chmod +x ./init.sh && ./init.sh ```
 В результате получится дерево хранилища:
