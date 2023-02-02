@@ -49,7 +49,7 @@
     ├── root_srv1s  
     │   └── healthcheck.sh  
     └── srv1s.conf  
-...
+```
 
 
 ## База данных  
