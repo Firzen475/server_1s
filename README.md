@@ -10,6 +10,47 @@
 
 Все образы оснащены системой healthcheck. В случае сбоя сервера он может быть перезапущен с помощью внешних компонент (Kubernetes)
 
+#### Дерево файлов  
+/server_1s/  
+├── README.md  
+├── docker-compose.yml  
+├── init.sh  
+├── lic  
+│   ├── Dockerfile  
+│   ├── docker-compose.yml  
+│   ├── entrypoint.sh  
+│   ├── hasplm.conf  
+│   └── healthcheck.sh  
+├── pgsql1s  
+│   ├── Dockerfile  
+│   ├── docker-compose.yml  
+│   ├── entrypoint.sh  
+│   ├── init.sh  
+│   └── root  
+│       ├── backup.sh  
+│       ├── healthcheck.sh  
+│       └── run.sh  
+└── srv1s  
+    ├── Dockerfile  
+    ├── apacheConf  
+    │   └── default-ssl.conf  
+    ├── apacheDir  
+    │   ├── database1  
+    │   │   └── default.vrd  
+    │   ├── database2  
+    │   │   └── default.vrd  
+    │   └── database3  
+    │       └── default.vrd  
+    ├── docker-compose.yml  
+    ├── entrypoint.sh  
+    ├── init.sh  
+    ├── nethasp.ini  
+    ├── root_srv1s  
+    │   └── healthcheck.sh  
+    └── srv1s.conf  
+
+
+
 ## База данных  
 #### Подготовка  
 В качестве базы данных используется Postgresql для 1С(ссылка). 
