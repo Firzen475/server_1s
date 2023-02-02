@@ -7,6 +7,7 @@ ARG PASS pass
 ENV PASS $PASS
 WORKDIR /root
 SHELL ["/bin/bash", "-c"]
+COPY entrypoint.sh /usr/local/bin/
 RUN apt update && apt install -y wget cron tzdata gosu && \
         ln -sf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone && \
         dpkg-reconfigure -f noninteractive tzdata && \
@@ -14,13 +15,13 @@ RUN apt update && apt install -y wget cron tzdata gosu && \
         wget https://repo.postgrespro.ru/1c-15/keys/pgpro-repo-add.sh && \
         /bin/sh pgpro-repo-add.sh && \
         apt-get install -y postgrespro-1c-15-contrib && \
-        /opt/pgpro/1c-15/bin/pg-setup initdb && \
-        mkdir -p /backup && mkdir -p /var/lib/pgpro/1c-15/data
+        mkdir -p /backup && \
+        chmod +x /usr/local/bin/entrypoint.sh
+#        /opt/pgpro/1c-15/bin/pg-setup initdb && \
+#        mkdir -p /backup && mkdir -p /var/lib/pgpro/1c-15/data
 
-VOLUME [ "/backup", "/var/lib/pgpro/1c-15/data", "/root" ]
+VOLUME [ "/backup", "/database", "/root" ]
 EXPOSE 5432
-COPY entrypoint.sh /usr/local/bin/
-RUN chmod +x /usr/local/bin/entrypoint.sh
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 
 
