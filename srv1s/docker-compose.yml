@@ -1,0 +1,66 @@
+version: "3.7"
+services:
+  srv1s:
+    build:
+      context: ./srv1s
+      dockerfile: Dockerfile
+      args:
+        TZ: ${TZ}
+        HASP_IP: ${HASP_IP}
+    image: srv1s
+    container_name: srv1s
+    hostname: srv1s
+    volumes:
+      - root_srv1s:/root/
+      - srvConfig:/srvConfig/
+      - apacheConf:/etc/apache2/sites-available/
+      - apacheDir:/var/www/1c/
+    ports:
+      - 1540:1540
+      - 1541:1541
+      - 1560-1591:1560-1591
+      - 443:443
+    networks:
+      - host
+    healthcheck:
+      test: ["CMD", "/bin/bash", "/root/healthcheck.sh" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: always
+    
+networks:
+  host:
+    name: host
+    external: true
+
+volumes:
+   root_srv1s:
+      driver: local
+      driver_opts:
+        type: 'none'
+        o: bind
+        device: "/_1s/root_srv1s/"
+   srvConfig:
+      driver: local
+      driver_opts:
+        type: 'none'
+        o: bind
+        device: "/_1s/srvConfig/"
+   apacheConf:
+      driver: local
+      driver_opts:
+        type: 'none'
+        o: bind
+        device: "/_1s/apacheConf/"
+   apacheDir:
+      driver: local
+      driver_opts:
+        type: 'none'
+        o: bind
+        device: "/_1s/apacheDir/"
+
+
+
+
+
