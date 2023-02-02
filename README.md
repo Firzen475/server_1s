@@ -11,19 +11,20 @@
 Все образы оснащены системой healthcheck. В случае сбоя сервера он может быть перезапущен с помощью внешних компонент (Kubernetes)
 
 #### Дерево файлов  
+```bash
 /server_1s/  
 ├── README.md  
 ├── docker-compose.yml  
 ├── init.sh  
 ├── lic  
-│   ├── Dockerfile  
-│   ├── docker-compose.yml  
-│   ├── entrypoint.sh  
-│   ├── hasplm.conf  
-│   └── healthcheck.sh  
+│   ├── Dockerfile  
+│   ├── docker-compose.yml  
+│   ├── entrypoint.sh  
+│   ├── hasplm.conf  
+│   └── healthcheck.sh  
 ├── pgsql1s  
-│   ├── Dockerfile  
-│   ├── docker-compose.yml  
+│   ├── Dockerfile  
+│   ├── docker-compose.yml  
 │   ├── entrypoint.sh  
 │   ├── init.sh  
 │   └── root  
@@ -48,7 +49,7 @@
     ├── root_srv1s  
     │   └── healthcheck.sh  
     └── srv1s.conf  
-
+...
 
 
 ## База данных  
