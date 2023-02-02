@@ -16,3 +16,15 @@ RUN  apt update && \
         rm /root/libusb-vhci_0.8-2_amd64.deb /root/usb-vhci-hcd-dkms_1.15.1_amd64.deb /root/usbhasp_0.1-2_amd64.deb /root/haspd_7.90-eter2ubuntu_amd64.deb /root/haspd-modules_7.90-eter2ubuntu_amd64.deb
         
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+
+
+
+
+
+
+
+
+
+
+
+
