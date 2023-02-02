@@ -108,8 +108,24 @@ ___
 ## Сервер 1С
 #### Подготовка  
 1. Настройка файла [nethasp.ini](./srv1s/nethasp.ini)  
-Достаточно указать ip сервера лицензий. В случае 
-2. 
+В случае работы серверов на одном хосте, файл настроен. Вслучае разделенных серверов, нужно указать ip сервера лицензий.  
+2. Настройка файла [default-ssl.conf](./srv1s/apacheConf/default-ssl.conf)  
+Нужно добавить разделы Directory в соответствии с правилами:
+```bash
+                ...
+                Alias "/database1" "/var/www/1c/database1/" # Заменить database1 на имя публикуемой базы.
+                <Directory "/var/www/1c/database1/">        # Тут тоже.
+                        AllowOverride All
+                        Options None
+                        Require all granted
+                        SetHandler 1c-application
+                        ManagedApplicationDescriptor "/var/www/1c/database1/default.vrd" 
+                                                # Файл публикации, находящийся в
+                                                # /_1s/apacheDir/[Имя_Публикуемой_Базы]/default.vrd
+                </Directory>
+                ...
+```
+3. 
 ___
 ## Сервер лицензий
 #### Подготовка  
