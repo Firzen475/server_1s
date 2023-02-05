@@ -133,8 +133,11 @@ ___
 5. Исправить файл сконфигурации [srv1s.conf](./srv1s/srv1s.conf).  
 6. Сгенерировать файлы сертификатов  
 ```openssl req -x509 -nodes -days 4000 -newkey rsa:2048 -keyout /_1s/root_srv1s/srv1s.key -out /_1s/root_srv1s/srv1s.crt -config ./srv1s/srv1s.conf```  
-7. Выполнить [init.sh](./srv1s/init.sh)
-```cd ./srv1s && chmod +x ./init.sh && ./init.sh ```
+7. Сгенерировать файл usr1cv8.keytab:
+Создать пользователя usr1cv8 в домене (имя пользователя должно совпадать с пользователем, от которого запущена   
+
+9. Выполнить [init.sh](./srv1s/init.sh)
+```cd ./srv1s && chmod +x ./init.sh && ./init.sh ```  
 В результате получится дерево хранилища:
 ```bash
 /_1s/
