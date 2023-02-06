@@ -104,9 +104,14 @@ ___
                 </Directory>
                 ...
 ```
-4. Настройка файлов [default.vrd](./srv1s/apacheDir/database1/default.vrd) и изменить имя родительсой папки на имя публикуемой базы как в пункте 2.  
-5. Исправить файл сконфигурации [srv1s.conf](./srv1s/srv1s.conf).  
-6. Сгенерировать файлы сертификатов  
+4. В папке [apacheDir](./srv1s/apacheDir/) переименовать папки "databaseX" в соответствии с именами публикуемых баз в пункте 2. В файлах [default.vrd](./srv1s/apacheDir/database1/default.vrd) изменить строки:  
+```
+                base="/databaseX"
+                ib="Srvr=&quot;srv1s&quot;;Ref=&quot;databaseX&quot;;">
+```  
+на имя публикуемой базы.  
+6. Исправить файл сконфигурации [srv1s.conf](./srv1s/srv1s.conf).  
+7. Сгенерировать файлы сертификатов  
 ```openssl req -x509 -nodes -days 4000 -newkey rsa:2048 -keyout /_1s/root_srv1s/srv1s.key -out /_1s/root_srv1s/srv1s.crt -config ./srv1s/srv1s.conf```  
 7. Сгенерировать файл usr1cv8.keytab:
 * Создать пользователя usr1cv8 в домене (имя пользователя должно совпадать с пользователем, от которого запущен сервер 1С)
