@@ -5,7 +5,7 @@ WORKDIR /root
 ADD distr /tmp
 COPY entrypoint.sh /usr/local/bin/
 COPY nethasp.ini /opt/1cv8/conf/
-COPY krb5.conf /etc/
+COPY krb5.conf /etc/krb5.conf
 SHELL ["/bin/bash", "-c"]
 RUN apt update && DEBIAN_FRONTEND=noninteractive apt install -y tzdata fonts-liberation fontconfig krb5-user libkrb5-dev apache2 libapache2-mod-php libapache2-mod-auth-kerb gosu && \
         ln -sf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone && \
