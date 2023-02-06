@@ -78,6 +78,9 @@
 │   └── srv1s.key
 └── srvConfig
 ```  
+#### Загрузка
+``` mkdir /server_1s && git clone https://github.com/Firzen475/server_1s.git /server_1s ```
+
 ___
 ## Сервер 1С
 #### Подготовка  
