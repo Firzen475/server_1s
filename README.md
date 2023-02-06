@@ -111,8 +111,6 @@ ___
 ```  
 на имя публикуемой базы.  
 6. Исправить файл сконфигурации [srv1s.conf](./srv1s/srv1s.conf).  
-7. Сгенерировать файлы сертификатов  
-```openssl req -x509 -nodes -days 4000 -newkey rsa:2048 -keyout ./srv1s/root_srv1s/srv1s.key -out ./srv1s/root_srv1s/srv1s.crt -config ./srv1s/srv1s.conf```  
 7. Сгенерировать файл usr1cv8.keytab:
 * Создать пользователя usr1cv8 в домене (имя пользователя должно совпадать с пользователем, от которого запущен сервер 1С)
 * Создать usr1cv8.keytab на домене коммандой:  
