@@ -16,7 +16,7 @@ if [ -f "/root/srv1s.crt" ] && [ -f "/root/srv1s.key" ] ; then
 fi
 echo "//////////////////"
 export SRV1CV8_KEYTAB=/root/usr1cv8.keytab
-$(find /opt/1cv8/x86_64/ -name ragent) \
+gosu usr1cv8 $(find /opt/1cv8/x86_64/ -name ragent) \
                         -d /srvConfig/ \
                         -port 1540 \
                         -regport 1541 \
