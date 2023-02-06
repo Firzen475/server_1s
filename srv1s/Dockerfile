@@ -12,8 +12,8 @@ RUN apt update && DEBIAN_FRONTEND=noninteractive apt install -y tzdata fonts-lib
         dpkg-reconfigure -f noninteractive tzdata && \
         fc-cache –fv && \
         a2enmod auth_kerb && \
-#        mkdir -p /var/www/1c/ &&
-        tar -xvf /tmp/$(ls /tmp/ | grep server) --directory /tmp/ &&\
+#        mkdir -p /var/www/1c/ && \
+        tar -xvf /tmp/$(ls /tmp/ | grep server) --directory /tmp/ && \
         /tmp/$(ls /tmp/ | grep setup-full) --mode unattended --disable-components client_full --enable-components server,ws,server_admin,liberica_jre,ru && \
         chmod +x /usr/local/bin/entrypoint.sh
 VOLUME [ "/root", "/home/usr1cv8/.1cv8/", "/var/www/1c/", "/etc/apache2/sites-available/" ]
