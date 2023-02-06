@@ -134,8 +134,12 @@ ___
 6. Сгенерировать файлы сертификатов  
 ```openssl req -x509 -nodes -days 4000 -newkey rsa:2048 -keyout /_1s/root_srv1s/srv1s.key -out /_1s/root_srv1s/srv1s.crt -config ./srv1s/srv1s.conf```  
 7. Сгенерировать файл usr1cv8.keytab:
-Создать пользователя usr1cv8 в домене (имя пользователя должно совпадать с пользователем, от которого запущена   
-
+* Создать пользователя usr1cv8 в домене (имя пользователя должно совпадать с пользователем, от которого запущен сервер 1С)
+* Создать usr1cv8.keytab на домене коммандой:  
+``` ktpass.exe -princ usr1cv8/srv1s.example.local@EXAMPLE.LOCAL -mapuser usr1cv8 -pass password -out C:\usr1cv8.keytab -ptype KRB5_NT_PRINCIPAL ```  
+где example.local заменить на имя домена.
+* Поместить файл usr1cv8.keytab в папку ./srv1s/root_srv1s/
+* Изменить [krb5.conf](./srv1s/krb5.conf) в соответствии с параметрами домена. 
 9. Выполнить [init.sh](./srv1s/init.sh)
 ```cd ./srv1s && chmod +x ./init.sh && ./init.sh ```  
 В результате получится дерево хранилища:
