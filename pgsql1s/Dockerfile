@@ -8,9 +8,10 @@ ENV PASS $PASS
 WORKDIR /root
 SHELL ["/bin/bash", "-c"]
 COPY entrypoint.sh /usr/local/bin/
-RUN apt update && apt install -y wget cron tzdata gosu && \
+RUN apt update && apt install -y wget cron tzdata gosu language-pack-ru && \
         ln -sf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone && \
         dpkg-reconfigure -f noninteractive tzdata && \
+        locale-gen ru_RU.UTF-8 && dpkg-reconfigure locales && \
         echo "${SHEDULE} chmod +x /root/run.sh && /bin/bash /root/run.sh" >> /mycron | crontab -u root /mycron && crontab -l && \
         wget https://repo.postgrespro.ru/1c-15/keys/pgpro-repo-add.sh && \
         /bin/sh pgpro-repo-add.sh && \
@@ -19,6 +20,10 @@ RUN apt update && apt install -y wget cron tzdata gosu && \
         chmod +x /usr/local/bin/entrypoint.sh
 #        /opt/pgpro/1c-15/bin/pg-setup initdb && \
 #        mkdir -p /backup && mkdir -p /var/lib/pgpro/1c-15/data
+
+ENV LANGUAGE ru_RU.UTF-8
+ENV LANG ru_RU.UTF-8
+ENV LC_ALL ru_RU.UTF-8
 
 VOLUME [ "/backup", "/database", "/root" ]
 EXPOSE 5432
