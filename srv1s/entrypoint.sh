@@ -9,6 +9,7 @@ if [ -f "/root/srv1s.crt" ] && [ -f "/root/srv1s.key" ] ; then
                         fi
                 fi
         done
+        sed -i "s:PATH_TO_WSAP24:$(find /opt/1cv8/x86_64/ -name wsap24.so):g" /etc/apache2/sites-available/default-ssl.conf
         /etc/init.d/apache2 start
         a2enmod ssl
         a2ensite default-ssl
@@ -16,7 +17,8 @@ if [ -f "/root/srv1s.crt" ] && [ -f "/root/srv1s.key" ] ; then
 fi
 echo "//////////////////"
 export SRV1CV8_KEYTAB=/root/usr1cv8.keytab
-gosu usr1cv8 $(find /opt/1cv8/x86_64/ -name ragent) \
+#gosu usr1cv8 $(find /opt/1cv8/x86_64/ -name ragent) \
+$(find /opt/1cv8/x86_64/ -name ragent) \
                         -d /srvConfig/ \
                         -port 1540 \
                         -regport 1541 \
