@@ -12,8 +12,7 @@ services:
     container_name: pgsql1s
     environment:
       - SHEDULE=${SHEDULE}
-    networks:
-      - host
+    network_mode: "host"
     volumes:
       - root_pgsql1s:/root
       - database:/database
@@ -24,11 +23,6 @@ services:
       timeout: 5s
       retries: 5
     restart: always
-
-networks:
-  host:
-    name: host
-    external: true
 
 volumes:
    root_pgsql1s:
