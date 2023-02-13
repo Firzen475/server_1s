@@ -20,19 +20,13 @@ services:
       - 1541:1541
       - 1560-1591:1560-1591
       - 443:443
-    networks:
-      - host
+    network_mode: "host"
     healthcheck:
       test: ["CMD", "/bin/bash", "/root/healthcheck.sh" ]
       interval: 10s
       timeout: 5s
       retries: 5
     restart: always
-    
-networks:
-  host:
-    name: host
-    external: true
 
 volumes:
    root_srv1s:
