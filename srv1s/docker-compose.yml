@@ -2,7 +2,7 @@ version: "3.7"
 services:
   srv1s:
     build:
-      context: ./srv1s
+      context: ./
       dockerfile: Dockerfile
       args:
         TZ: ${TZ}
