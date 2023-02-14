@@ -12,9 +12,9 @@ fi
 
 echo "Настройка hasp+ ключей =)"
 apt -qq update 2>/dev/null >/dev/null
-if [ -f ./Hasp.zip ]; then
+if [ -f ./hasp.zip ]; then
     apt install -qq -y p7zip-full 2>/dev/null >/dev/null
-    7z x ./Hasp.zip -p"$3" -o/tmp/ 2>/dev/null >/dev/null
+    7z x ./hasp.zip -p"$3" -o/tmp/ 2>/dev/null >/dev/null
     mv /tmp/haspd_7.90-eter2ubuntu_amd64.deb /tmp/haspd_7.90-eter2ubuntu_amd64.deb ./srv1s/distr/
     apt install -y libusb-vhci_0.8-2_amd64.deb 2>/dev/null >/dev/null
     apt install -y usb-vhci-hcd-dkms_1.15.1_amd64.deb 2>/dev/null >/dev/null
