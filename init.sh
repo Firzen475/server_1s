@@ -14,16 +14,16 @@ echo "Настройка hasp+ ключей =)"
 apt -qq update 2>/dev/null >/dev/null
 if [ -f ./hasp.zip ]; then
     apt install -qq -y p7zip-full 2>/dev/null >/dev/null
-    7z x ./hasp.zip -p"$3" -o/tmp/ 2>/dev/null >/dev/null
-    mv /tmp/haspd_7.90-eter2ubuntu_amd64.deb /tmp/haspd_7.90-eter2ubuntu_amd64.deb ./srv1s/distr/
-    apt install -y libusb-vhci_0.8-2_amd64.deb 2>/dev/null >/dev/null
-    apt install -y usb-vhci-hcd-dkms_1.15.1_amd64.deb 2>/dev/null >/dev/null
-    apt install -y usbhasp_0.1-2_amd64.deb 2>/dev/null >/dev/null
+    7z x ./hasp.zip -y -p"$3" -o/tmp/ 2>/dev/null >/dev/null
+    mv /tmp/haspd_7.90-eter2ubuntu_amd64.deb /tmp/haspd-modules_7.90-eter2ubuntu_amd64.deb ./srv1s/distr/
+    apt install -y /tmp/libusb-vhci_0.8-2_amd64.deb 2>/dev/null >/dev/null
+    apt install -y /tmp/usb-vhci-hcd-dkms_1.15.1_amd64.deb 2>/dev/null >/dev/null
+    apt install -y /tmp/usbhasp_0.1-2_amd64.deb 2>/dev/null >/dev/null
     mkdir -p /etc/usbhaspd/keys
     mv /tmp/srv.json /tmp/users.json /etc/usbhaspd/keys
     systemctl enable usbhaspd
     systemctl start usbhaspd
-    lsusb | grep Alladin
+    lsusb | grep Aladdin
 fi
 
 dc=$(echo "$1" | awk '{print tolower($0)}')
