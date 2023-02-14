@@ -3,7 +3,7 @@ ARG TZ Europe/Moscow
 ENV TZ $TZ
 WORKDIR /root
 ADD distr /tmp
-COPY nethasp.ini /opt/1cv8/conf/
+COPY nethasp.ini logcfg.xml /opt/1cv8/conf/
 COPY krb5.conf /etc/krb5.conf
 SHELL ["/bin/bash", "-c"]
 RUN apt update && DEBIAN_FRONTEND=noninteractive apt install -y tzdata fonts-liberation fontconfig krb5-user libkrb5-dev apache2 libapache2-mod-php \
