@@ -3,7 +3,6 @@ ARG TZ Europe/Moscow
 ENV TZ $TZ
 WORKDIR /root
 ADD distr /tmp
-COPY entrypoint.sh /usr/local/bin/
 COPY nethasp.ini /opt/1cv8/conf/
 COPY krb5.conf /etc/krb5.conf
 SHELL ["/bin/bash", "-c"]
@@ -14,7 +13,9 @@ RUN apt update && DEBIAN_FRONTEND=noninteractive apt install -y tzdata fonts-lib
         a2enmod auth_kerb && \
 #        mkdir -p /var/www/1c/ && \
         tar -xvf /tmp/$(ls /tmp/ | grep server64) --directory /tmp/ && \
-        /tmp/$(ls /tmp/ | grep setup-full) --mode unattended --disable-components client_full --enable-components server,ws,server_admin,liberica_jre,ru
+        /tmp/$(ls /tmp/ | grep setup-full) --mode unattended --disable-components client_full --enable-components server,ws,server_admin,liberica_jre,ru && \
+        
+
 ############################################# 
 #RUN apt install -y git
 #RUN apt install -y build-essential linux-headers-$(uname -r) linux-image-$(uname -r)
