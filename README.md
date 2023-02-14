@@ -95,7 +95,7 @@ echo \
 sudo apt-get update && sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin && \
 sudo curl -L "https://github.com/docker/compose/releases/download/1.26.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose && \
 sudo chmod +x /usr/local/bin/docker-compose && \
-mkdir /server_1s && git clone https://github.com/Firzen475/server_1s.git /server_1s && cd /server_1s
+mkdir -p /server_1s/distr/ && git clone https://github.com/Firzen475/server_1s.git /server_1s && cd /server_1s
 ```  
 Получаем следующую структуру файлов:  
 ```bash
