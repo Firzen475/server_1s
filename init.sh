@@ -1,5 +1,4 @@
 #!/bin/bash
-#!/bin/bash
 
 if [[ ! -n "$1" ]]; then
         echo "Не задано имя контроллера домена!"
@@ -46,7 +45,8 @@ openssl req -x509 -nodes -days 4000 -newkey rsa:2048 \
 ls -all ./srv1s/root_srv1s/srv1s.key
 ls -all ./srv1s/root_srv1s/srv1s.crt
 
-echo "Подготовка "
+echo "Подготовка хранилища"
+apt install -qq -y tree > /dev/null
 [ -d /_1s/srvConfig/ ] || mkdir -p /_1s/srvConfig
 [ -d /_1s/root_srv1s/ ] || mv ./srv1s/root_srv1s /_1s/root_srv1s
 [ -d /_1s/apacheConf/ ] || mv ./srv1s/apacheConf /_1s/apacheConf
@@ -55,8 +55,22 @@ echo "Подготовка "
 [ -d /_1s/backup/ ] || mkdir -p /_1s/backup
 [ -d /_1s/database/ ] || mkdir -p /_1s/database
 [ -d /_1s/root_pgsql1s/ ] || mv ./pgsql1s/root /_1s/root_pgsql1s
+tree /_1s/
 
 if [[ ! -f ./.env ]]; then
+  touch ./.env && \
+  echo 'TZ="Europe/Moscow"     # Europe/Moscow Asia/Yekaterinburg' >> ./.env && \
+  echo 'PASS="password"        # Пароль пользователя postgres' >> ./.env && \
+  echo 'SHEDULE="0 0 * * *"    # Расписание в формате cron * * * * *' >> ./.env
+fi
+
+if [[ ! -f ./srv1s/.env ]]; then
+  touch ./srv1s/.env && \
+  echo 'TZ="Europe/Moscow"     # Europe/Moscow Asia/Yekaterinburg' >> ./.env && \
+  echo 'PASS="password"        # Пароль пользователя postgres' >> ./.env && \
+fi
+
+if [[ ! -f ./pgsql1s/.env ]]; then
   touch ./.env && \
   echo 'TZ="Europe/Moscow"     # Europe/Moscow Asia/Yekaterinburg' >> ./.env && \
   echo 'PASS="password"        # Пароль пользователя postgres' >> ./.env && \
