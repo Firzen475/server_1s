@@ -11,9 +11,20 @@ if [[ ! -n "$2" ]]; then
 fi
 
 echo "Настройка hasp+ ключей =)"
-apt -qq update
-
-
+apt -qq update 2>/dev/null >/dev/null
+if [ -f ./Hasp.zip ]; then
+    apt install -qq -y p7zip-full 2>/dev/null >/dev/null
+    7z x ./Hasp.zip -p"$3" -o/tmp/ 2>/dev/null >/dev/null
+    mv /tmp/haspd_7.90-eter2ubuntu_amd64.deb /tmp/haspd_7.90-eter2ubuntu_amd64.deb ./srv1s/distr/
+    apt install -y libusb-vhci_0.8-2_amd64.deb 2>/dev/null >/dev/null
+    apt install -y usb-vhci-hcd-dkms_1.15.1_amd64.deb 2>/dev/null >/dev/null
+    apt install -y usbhasp_0.1-2_amd64.deb 2>/dev/null >/dev/null
+    mkdir -p /etc/usbhaspd/keys
+    mv /tmp/srv.json /tmp/users.json /etc/usbhaspd/keys
+    systemctl enable usbhaspd
+    systemctl start usbhaspd
+    lsusb | grep Alladin
+fi
 
 dc=$(echo "$1" | awk '{print tolower($0)}')
 domain_up=$(echo "$2" |  awk '{print toupper($0)}')
@@ -51,7 +62,7 @@ ls -all ./srv1s/root_srv1s/srv1s.key
 ls -all ./srv1s/root_srv1s/srv1s.crt
 
 echo "Подготовка хранилища"
-apt install -qq -y tree > /dev/null
+apt install -qq -y tree 2>/dev/null >/dev/null
 [ -d /_1s/srvConfig/ ] || mkdir -p /_1s/srvConfig
 [ -d /_1s/root_srv1s/ ] || mv ./srv1s/root_srv1s /_1s/root_srv1s
 [ -d /_1s/apacheConf/ ] || mv ./srv1s/apacheConf /_1s/apacheConf
