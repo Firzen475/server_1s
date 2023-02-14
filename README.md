@@ -112,7 +112,7 @@ mkdir /server_1s && git clone https://github.com/Firzen475/server_1s.git /server
 Нужно добавить разделы Directory в соответствии с правилами:
 ```bash
                 ...
-                Alias "/database1" "/var/www/1c/databaseX/" # Заменить databaseX на имя публикуемой базы.
+                Alias "/databaseX" "/var/www/1c/databaseX/" # Заменить databaseX на имя публикуемой базы.
                 <Directory "/var/www/1c/databaseX/">        # Тут тоже.
                         AllowOverride None
                         Options None
