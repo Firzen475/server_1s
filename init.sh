@@ -21,6 +21,7 @@ if [ -f ./hasp.zip ]; then
     apt install -y /tmp/usbhasp_0.1-2_amd64.deb 
     mkdir -p /etc/usbhaspd/keys
     mv /tmp/srv.json /tmp/users.json /etc/usbhaspd/keys
+    apt -qq update 2>/dev/null >/dev/null
     systemctl enable usbhaspd
     systemctl start usbhaspd
     lsusb | grep Aladdin
