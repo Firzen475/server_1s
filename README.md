@@ -105,21 +105,33 @@ mkdir /server_1s && git clone https://github.com/Firzen475/server_1s.git /server
 #### Настройка 
 1. Скачать нужную версию сервера и закинуть в папку [distr](./srv1s/distr/)  
 В качестве сервера 1С используется версия [8.3.22](https://releases.1c.ru/project/Platform83) и выше. Следует использовать вариант "Технологическая платформа 1С:Предприятия (64-bit) для Linux".
-2. Настройка файла [nethasp.ini](./srv1s/nethasp.ini)  
-В случае работы серверов на одном хосте, файл настроен. Вслучае разделенных серверов, нужно указать ip сервера лицензий.  
+2. На хосте выполнить комманду:  
+```sed -i 's/^127.0.1.1.*/127.0.1.1 srv1s.example.com/g' /etc/hosts```  
+где example.com заменить на домен.  
 3. Настройка файла [default-ssl.conf](./srv1s/apacheConf/default-ssl.conf)  
 Нужно добавить разделы Directory в соответствии с правилами:
 ```bash
                 ...
-                Alias "/database1" "/var/www/1c/database1/" # Заменить database1 на имя публикуемой базы.
-                <Directory "/var/www/1c/database1/">        # Тут тоже.
-                        AllowOverride All
+                Alias "/database1" "/var/www/1c/databaseX/" # Заменить databaseX на имя публикуемой базы.
+                <Directory "/var/www/1c/databaseX/">        # Тут тоже.
+                        AllowOverride None
                         Options None
-                        Require all granted
+                        Order allow,deny
+                        Allow from all
+                        AuthName "1C:Enterprise web client"
+                        AuthType Kerberos
+                        Krb5Keytab /srvConfig/usr1cv8.keytab
+                        KrbVerifyKDC off
+                        KrbDelegateBasic off
+                        KrbServiceName Any
+                        KrbSaveCredentials on
+                        KrbMethodK5Passwd off
+                        KrbMethodNegotiate on
+                        Require valid-user
                         SetHandler 1c-application
-                        ManagedApplicationDescriptor "/var/www/1c/database1/default.vrd" 
-                                                # Файл публикации, находящийся в
-                                                # /_1s/apacheDir/[Имя_Публикуемой_Базы]/default.vrd
+                        ManagedApplicationDescriptor "/var/www/1c/databaseX/default.vrd" 
+                                                # Файл публикации на хосте, находящийся в
+                                                # /_1s/apacheDir/databaseX/default.vrd
                 </Directory>
                 ...
 ```
