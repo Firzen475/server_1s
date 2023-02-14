@@ -15,11 +15,6 @@ services:
       - apacheConf:/etc/apache2/sites-available/
       - apacheDir:/var/www/1c/
       - /dev/bus/usb:/dev/bus/usb
-    ports:
-      - 1540:1540
-      - 1541:1541
-      - 1560-1591:1560-1591
-      - 443:443
     network_mode: "host"
     healthcheck:
       test: ["CMD", "/bin/bash", "/root/healthcheck.sh" ]
