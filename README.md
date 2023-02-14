@@ -102,14 +102,14 @@ mkdir /server_1s && git clone https://github.com/Firzen475/server_1s.git /server
 
 ```
 ## Сервер 1С
-#### Настройка 
-1. Скачать нужную версию сервера и закинуть в папку [distr](./srv1s/distr/)  
-В качестве сервера 1С используется версия [8.3.22](https://releases.1c.ru/project/Platform83) и выше. Следует использовать вариант "Технологическая платформа 1С:Предприятия (64-bit) для Linux".
-2. На хосте выполнить комманду:  
+#### Настройка  
+. На хосте выполнить комманду:  
 ```chmod +x ./init.sh && ./init.sh [dc_name] [domain_name] [hasp_zip_password]```
 [dc_name]-имя контроллера домена  
 [domain_name]-название домена  
 [hasp_zip_password]-пароль от архива hasp.zip (Если архив есть)
+2. Скачать нужную версию сервера и закинуть в папку [distr](./srv1s/distr/)  
+В качестве сервера 1С используется версия [8.3.22](https://releases.1c.ru/project/Platform83) и выше. Следует использовать вариант "Технологическая платформа 1С:Предприятия (64-bit) для Linux".
 3. Настройка файла [default-ssl.conf](./srv1s/apacheConf/default-ssl.conf)  
 Нужно добавить разделы Directory в соответствии с правилами:
 ```bash
