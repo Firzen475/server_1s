@@ -136,26 +136,27 @@ mkdir /server_1s && git clone https://github.com/Firzen475/server_1s.git /server
                 ib="Srvr=&quot;srv1s&quot;;Ref=&quot;databaseX&quot;;">
 ```  
 на имя публикуемой базы.  
-3. На хосте выполнить комманду:  
-```chmod +x ./init.sh && ./init.sh [dc_name] [domain_name] [hasp_zip_password]```  
-* [dc_name]-имя контроллера домена  
-* [domain_name]-название домена  
-* [hasp_zip_password]-пароль от архива hasp.zip (Архив должен быть скопирован в /server_1s)  
-4. Скачать нужную версию сервера и закинуть в папку [distr](./srv1s/distr/)  
-В качестве сервера 1С используется версия [8.3.22](https://releases.1c.ru/project/Platform83) и выше. Следует использовать вариант "Технологическая платформа 1С:Предприятия (64-bit) для Linux".  
-5. Сгенерировать файл usr1cv8.keytab:
+3. Сгенерировать файл usr1cv8.keytab:
 * Создать пользователя usr1cv8 в домене
-* Создать usr1cv8.keytab на домене последовательностью комманд:  
+* Создать usr1cv8.keytab на домене последовательностью команд:  
 ```bash 
 ktpass.exe /crypto ALL /princ usr1cv8/srv1s.example.com@EXAMPLE.COM /mapuser usr1cv8 /pass Password /out C:\usr1cv8_tmp.keytab /ptype KRB5_NT_PRINCIPAL
 ktpass.exe /crypto ALL /princ HTTP/srv1s.example.com@EXAMPLE.COM /mapuser usr1cv8 /pass Password /in C:\usr1cv8_tmp.keytab /out C:\usr1cv8.keytab /ptype KRB5_NT_PRINCIPAL -setupn -setpass
 ```  
 где example.com и EXAMPLE.COM заменить на имя домена.  
-* Поместить файл usr1cv8.keytab в папку ./srv1s/root_srv1s/ 
+* Поместить файл usr1cv8.keytab в папку ./srv1s/root_srv1s/  
+4. На хосте выполнить комманду:  
+```chmod +x ./init.sh && ./init.sh [dc_name] [domain_name] [hasp_zip_password]```  
+* [dc_name]-имя контроллера домена  
+* [domain_name]-название домена  
+* [hasp_zip_password]-пароль от архива hasp.zip (Архив должен быть скопирован в /server_1s)  
 В результате получится дерево хранилища:
 ```bash
 
-```
+```  
+5. Скачать нужную версию сервера и закинуть в папку [distr](./srv1s/distr/)  
+В качестве сервера 1С используется версия [8.3.22](https://releases.1c.ru/project/Platform83) и выше. Следует использовать вариант "Технологическая платформа 1С:Предприятия (64-bit) для Linux".  
+  
 #### Особенности обновления  
 Для обновления нужно:  
 * Скачать новую версию сервера и поместить в папку [distr](./srv1s/distr/)  
