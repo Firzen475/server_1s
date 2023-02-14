@@ -10,7 +10,10 @@ if [[ ! -n "$2" ]]; then
         exit 1
 fi
 
+echo "Настройка hasp+ ключей =)"
 apt -qq update
+
+
 
 dc=$(echo "$1" | awk '{print tolower($0)}')
 domain_up=$(echo "$2" |  awk '{print toupper($0)}')
