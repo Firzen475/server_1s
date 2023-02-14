@@ -61,6 +61,12 @@ openssl req -x509 -nodes -days 4000 -newkey rsa:2048 \
 ls -all ./srv1s/root_srv1s/srv1s.key
 ls -all ./srv1s/root_srv1s/srv1s.crt
 
+echo "Настройка файла krb5.conf"
+sed -i "s/example.com/$domain_low/g" ./srv1s/krb5.conf
+sed -i "s/EXAMPLE.COM/$domain_up/g" ./srv1s/krb5.conf
+cat ./srv1s/krb5.conf | grep "$domain_low"
+cat ./srv1s/krb5.conf | grep "$domain_up"
+
 echo "Подготовка хранилища"
 apt install -qq -y tree 2>/dev/null >/dev/null
 [ -d /_1s/srvConfig/ ] || mkdir -p /_1s/srvConfig
