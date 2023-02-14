@@ -24,12 +24,9 @@ if [ -f ./hasp.zip ]; then
     apt list --installed | grep usbhasp
     mkdir -p /etc/usbhaspd/keys
     mv /tmp/srv.json /tmp/users.json /etc/usbhaspd/keys
-    apt -qq update 2>/dev/null >/dev/null
-    apt install -y /tmp/libusb-vhci_0.8-2_amd64.deb 2>/dev/null >/dev/null
-    apt install -y /tmp/usb-vhci-hcd-dkms_1.15.1_amd64.deb 2>/dev/null >/dev/null
-    apt install -y /tmp/usbhasp_0.1-2_amd64.deb 2>/dev/null >/dev/null
     systemctl enable usbhaspd
     systemctl start usbhaspd
+    apt -qq update 2>/dev/null >/dev/null
     lsusb | grep Aladdin
 fi
 
