@@ -103,14 +103,7 @@ mkdir /server_1s && git clone https://github.com/Firzen475/server_1s.git /server
 ```
 ## Сервер 1С
 #### Настройка  
-1. На хосте выполнить комманду:  
-```chmod +x ./init.sh && ./init.sh [dc_name] [domain_name] [hasp_zip_password]```  
-* [dc_name]-имя контроллера домена  
-* [domain_name]-название домена  
-* [hasp_zip_password]-пароль от архива hasp.zip (Архив должен быть скопирован в /server_1s)  
-2. Скачать нужную версию сервера и закинуть в папку [distr](./srv1s/distr/)  
-В качестве сервера 1С используется версия [8.3.22](https://releases.1c.ru/project/Platform83) и выше. Следует использовать вариант "Технологическая платформа 1С:Предприятия (64-bit) для Linux".  
-3. Настройка файла [default-ssl.conf](./srv1s/apacheConf/default-ssl.conf)  
+1. Настройка файла [default-ssl.conf](./srv1s/apacheConf/default-ssl.conf)  
 Нужно добавить разделы Directory в соответствии с правилами:
 ```bash
                 ...
@@ -137,13 +130,20 @@ mkdir /server_1s && git clone https://github.com/Firzen475/server_1s.git /server
                 </Directory>
                 ...
 ```
-4. В папке [apacheDir](./srv1s/apacheDir/) переименовать папки "databaseX" в соответствии с именами публикуемых баз в пункте 2. В файлах [default.vrd](./srv1s/apacheDir/database1/default.vrd) изменить строки:  
+2. В папке [apacheDir](./srv1s/apacheDir/) переименовать папки "databaseX" в соответствии с именами публикуемых баз в пункте 2. В файлах [default.vrd](./srv1s/apacheDir/database1/default.vrd) изменить строки:  
 ```
                 base="/databaseX"
                 ib="Srvr=&quot;srv1s&quot;;Ref=&quot;databaseX&quot;;">
 ```  
-на имя публикуемой базы.    
-7. Сгенерировать файл usr1cv8.keytab:
+на имя публикуемой базы.  
+3. На хосте выполнить комманду:  
+```chmod +x ./init.sh && ./init.sh [dc_name] [domain_name] [hasp_zip_password]```  
+* [dc_name]-имя контроллера домена  
+* [domain_name]-название домена  
+* [hasp_zip_password]-пароль от архива hasp.zip (Архив должен быть скопирован в /server_1s)  
+4. Скачать нужную версию сервера и закинуть в папку [distr](./srv1s/distr/)  
+В качестве сервера 1С используется версия [8.3.22](https://releases.1c.ru/project/Platform83) и выше. Следует использовать вариант "Технологическая платформа 1С:Предприятия (64-bit) для Linux".  
+5. Сгенерировать файл usr1cv8.keytab:
 * Создать пользователя usr1cv8 в домене
 * Создать usr1cv8.keytab на домене последовательностью комманд:  
 ```bash 
