@@ -106,8 +106,9 @@ mkdir /server_1s && git clone https://github.com/Firzen475/server_1s.git /server
 1. Скачать нужную версию сервера и закинуть в папку [distr](./srv1s/distr/)  
 В качестве сервера 1С используется версия [8.3.22](https://releases.1c.ru/project/Platform83) и выше. Следует использовать вариант "Технологическая платформа 1С:Предприятия (64-bit) для Linux".
 2. На хосте выполнить комманду:  
-```sed -i 's/^127.0.1.1.*/127.0.1.1 srv1s.example.com/g' /etc/hosts```  
-где example.com заменить на домен.  
+```chmod +x ./init.sh && ./init.sh [dc_name] [domain_name]```
+[dc_name]-имя контроллера домена
+[domain_name]-название домена  
 3. Настройка файла [default-ssl.conf](./srv1s/apacheConf/default-ssl.conf)  
 Нужно добавить разделы Directory в соответствии с правилами:
 ```bash
