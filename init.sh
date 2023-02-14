@@ -1,5 +1,5 @@
 #!/bin/bash
-[ -f "$file" ] || mkdir ./srv1s/distr/
+[ -f "./srv1s/distr/" ] || mkdir ./srv1s/distr/
 if [[ ! -n "$1" ]]; then
         echo "Не задано имя контроллера домена!"
         exit 1
@@ -16,9 +16,9 @@ if [ -f ./hasp.zip ]; then
     apt install -qq -y p7zip-full 2>/dev/null >/dev/null
     7z x ./hasp.zip -y -p"$3" -o/tmp/ 2>/dev/null >/dev/null
     mv /tmp/haspd_7.90-eter2ubuntu_amd64.deb /tmp/haspd-modules_7.90-eter2ubuntu_amd64.deb ./srv1s/distr/
-    apt install -y /tmp/libusb-vhci_0.8-2_amd64.deb 2>/dev/null >/dev/null
-    apt install -y /tmp/usb-vhci-hcd-dkms_1.15.1_amd64.deb 2>/dev/null >/dev/null
-    apt install -y /tmp/usbhasp_0.1-2_amd64.deb 2>/dev/null >/dev/null
+    apt install -y /tmp/libusb-vhci_0.8-2_amd64.deb 
+    apt install -y /tmp/usb-vhci-hcd-dkms_1.15.1_amd64.deb 
+    apt install -y /tmp/usbhasp_0.1-2_amd64.deb 
     mkdir -p /etc/usbhaspd/keys
     mv /tmp/srv.json /tmp/users.json /etc/usbhaspd/keys
     systemctl enable usbhaspd
