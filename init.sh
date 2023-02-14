@@ -1,5 +1,5 @@
 #!/bin/bash
-[ -f "./srv1s/distr/" ] || mkdir ./srv1s/distr/
+[ -d "./srv1s/distr/" ] || mkdir ./srv1s/distr/
 if [[ ! -n "$1" ]]; then
         echo "Не задано имя контроллера домена!"
         exit 1
