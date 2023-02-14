@@ -1,0 +1,8 @@
+<config xmlns="http://v8.1c.ru/v8/tech-log">
+ <log location="/srvConfig/logs" history="1">
+  <event>
+   <eq property="name" value="CONN"/>
+  </event>
+  <property name="all"/>
+ </log>
+</config>
