@@ -6,7 +6,6 @@ services:
       dockerfile: Dockerfile
       args:
         TZ: ${TZ}
-        HASP_IP: ${HASP_IP}
     image: srv1s
     container_name: srv1s
     hostname: srv1s
