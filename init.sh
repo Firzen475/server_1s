@@ -57,22 +57,25 @@ apt install -qq -y tree > /dev/null
 [ -d /_1s/root_pgsql1s/ ] || mv ./pgsql1s/root /_1s/root_pgsql1s
 tree /_1s/
 
+echo "Подготовка файлов переменных"
 if [[ ! -f ./.env ]]; then
   touch ./.env && \
   echo 'TZ="Europe/Moscow"     # Europe/Moscow Asia/Yekaterinburg' >> ./.env && \
   echo 'PASS="password"        # Пароль пользователя postgres' >> ./.env && \
   echo 'SHEDULE="0 0 * * *"    # Расписание в формате cron * * * * *' >> ./.env
+  cat ./.env
 fi
 
 if [[ ! -f ./srv1s/.env ]]; then
   touch ./srv1s/.env && \
-  echo 'TZ="Europe/Moscow"     # Europe/Moscow Asia/Yekaterinburg' >> ./.env && \
-  echo 'PASS="password"        # Пароль пользователя postgres' >> ./.env && \
+  echo 'TZ="Europe/Moscow"     # Europe/Moscow Asia/Yekaterinburg' >> ./.env
+  cat ./srv1s/.env
 fi
 
 if [[ ! -f ./pgsql1s/.env ]]; then
-  touch ./.env && \
+  touch ./pgsql1s/.env && \
   echo 'TZ="Europe/Moscow"     # Europe/Moscow Asia/Yekaterinburg' >> ./.env && \
   echo 'PASS="password"        # Пароль пользователя postgres' >> ./.env && \
   echo 'SHEDULE="0 0 * * *"    # Расписание в формате cron * * * * *' >> ./.env
+  cat ./pgsql1s/.env
 fi
