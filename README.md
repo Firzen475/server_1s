@@ -106,9 +106,10 @@ mkdir /server_1s && git clone https://github.com/Firzen475/server_1s.git /server
 1. Скачать нужную версию сервера и закинуть в папку [distr](./srv1s/distr/)  
 В качестве сервера 1С используется версия [8.3.22](https://releases.1c.ru/project/Platform83) и выше. Следует использовать вариант "Технологическая платформа 1С:Предприятия (64-bit) для Linux".
 2. На хосте выполнить комманду:  
-```chmod +x ./init.sh && ./init.sh [dc_name] [domain_name]```
-[dc_name]-имя контроллера домена
+```chmod +x ./init.sh && ./init.sh [dc_name] [domain_name] [hasp_zip_password]```
+[dc_name]-имя контроллера домена  
 [domain_name]-название домена  
+[hasp_zip_password]-пароль от архива hasp.zip (Если архив есть)
 3. Настройка файла [default-ssl.conf](./srv1s/apacheConf/default-ssl.conf)  
 Нужно добавить разделы Directory в соответствии с правилами:
 ```bash
@@ -141,46 +142,28 @@ mkdir /server_1s && git clone https://github.com/Firzen475/server_1s.git /server
                 base="/databaseX"
                 ib="Srvr=&quot;srv1s&quot;;Ref=&quot;databaseX&quot;;">
 ```  
-на имя публикуемой базы.  
-6. Исправить файл сконфигурации [srv1s.conf](./srv1s/srv1s.conf).  
+на имя публикуемой базы.    
 7. Сгенерировать файл usr1cv8.keytab:
-* Создать пользователя usr1cv8 в домене (имя пользователя должно совпадать с пользователем, от которого запущен сервер 1С)
-* Создать usr1cv8.keytab на домене коммандой:  
-``` ktpass.exe -princ usr1cv8/srv1s.example.local@EXAMPLE.LOCAL -mapuser usr1cv8 -pass password -out C:\usr1cv8.keytab -ptype KRB5_NT_PRINCIPAL ```  
-где example.local заменить на имя домена.
-* Поместить файл usr1cv8.keytab в папку ./srv1s/root_srv1s/
-* Изменить [krb5.conf](./srv1s/krb5.conf) в соответствии с параметрами домена. 
-9. Выполнить [init.sh](./srv1s/init.sh)
-```cd ./srv1s && chmod +x ./init.sh && ./init.sh ```  
+* Создать пользователя usr1cv8 в домене
+* Создать usr1cv8.keytab на домене последовательностью комманд:  
+```bash 
+ktpass.exe /crypto ALL /princ usr1cv8/srv1s.example.com@EXAMPLE.COM /mapuser usr1cv8 /pass Password /out C:\usr1cv8_tmp.keytab /ptype KRB5_NT_PRINCIPAL
+ktpass.exe /crypto ALL /princ HTTP/srv1s.example.com@EXAMPLE.COM /mapuser usr1cv8 /pass Password /in C:\usr1cv8_tmp.keytab /out C:\usr1cv8.keytab /ptype KRB5_NT_PRINCIPAL -setupn -setpass
+```  
+где example.com и EXAMPLE.COM заменить на имя домена.  
+* Поместить файл usr1cv8.keytab в папку ./srv1s/root_srv1s/ 
 В результате получится дерево хранилища:
 ```bash
-/_1s/
-├── apacheConf
-│   └── default-ssl.conf
-├── apacheDir
-│   ├── database1
-│   │   └── default.vrd
-│   ├── database2
-│   │   └── default.vrd
-│   └── database3
-│       └── default.vrd
-├── root_srv1s
-│   ├── healthcheck.sh
-│   ├── srv1s.crt
-│   └── srv1s.key
-└── srvConfig
+
 ```
 #### Особенности обновления  
 Для обновления нужно:  
 * Скачать новую версию сервера и поместить в папку [distr](./srv1s/distr/)  
 В качестве сервера 1С используется версия [8.3.22](https://releases.1c.ru/project/Platform83) и выше. Следует использовать вариант "Технологическая платформа 1С:Предприятия (64-bit) для Linux".
-* Может случиться что базы пропадут. ОНИ ОСТАЛИС НА СЕРВЕРЕ POSTGRESQL!  
-При обновлении может произойти ситуация что базы исчезнут, чтобы это исправить, их нужно добавить вручную через консоль администрирования серверов. Для этого нужно знать их названия не сервере postgresql. =)
-___
-## Сервер лицензий
-#### Подготовка  
-Скачать недостающие файлы.  
-В файле hasplm.conf поправить прослушиваемые ip, если нужно.  
+* Если после обновления базы пропали, нужно добавить их с помощью консоли администрирования. Названия можно получить на сервере pgsql1s:
+```bash
+
+```
 ___
 ## База данных  
 #### Подготовка  
