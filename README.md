@@ -160,10 +160,10 @@ ktpass.exe /crypto ALL /princ HTTP/srv1s.example.com@EXAMPLE.COM /mapuser usr1cv
   
 
 ___
-#### Сервер Postgresql   
-Для формирования начальных дирректорий и файлов выполнить:  
-* ```chmod +x ./init.sh && ./init.sh```в случае запуска всех серверов на одном хосте.  
-* ```cd ./pgsql1s && chmod +x ./init.sh && ./init.sh```в случае запуска pgsql на отдельном хосте.  
+#### Сервер Postgresql  
+1. На хосте выполнить комманду:
+```chmod +x ./init.sh && ./init.sh pgsql1s```  
+   
 
 В, созданном скриптом, файле .env нужно отредактировать переменные:  
 
