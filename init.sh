@@ -1,6 +1,12 @@
 #!/bin/bash
 
 if [ "$1" = "pgsql1s" ]; then
+  echo "Настройка Postgresql"
+  echo "Подготовка хранилища"
+  apt install -qq -y tree 2>/dev/null >/dev/null
+  [ -d /_1s/backup/ ] || mkdir -p /_1s/backup
+  [ -d /_1s/database/ ] || mkdir -p /_1s/database
+  [ -d /_1s/root_pgsql1s/ ] || mv ./pgsql1s/root /_1s/root_pgsql1s
   if [[ ! -f ./pgsql1s/.env ]]; then
     touch ./pgsql1s/.env && \
     echo 'TZ="Europe/Moscow"     # Europe/Moscow Asia/Yekaterinburg' >> ./pgsql1s/.env && \
@@ -90,10 +96,6 @@ apt install -qq -y tree 2>/dev/null >/dev/null
 [ -d /_1s/root_srv1s/ ] || mv ./srv1s/root_srv1s /_1s/root_srv1s
 [ -d /_1s/apacheConf/ ] || mv ./srv1s/apacheConf /_1s/apacheConf
 [ -d /_1s/apacheDir/ ] || mv ./srv1s/apacheDir /_1s/apacheDir
-
-[ -d /_1s/backup/ ] || mkdir -p /_1s/backup
-[ -d /_1s/database/ ] || mkdir -p /_1s/database
-[ -d /_1s/root_pgsql1s/ ] || mv ./pgsql1s/root /_1s/root_pgsql1s
 tree /_1s/
 
 echo "Подготовка файлов переменных"
@@ -111,15 +113,6 @@ if [[ ! -f ./srv1s/.env ]]; then
   echo 'TZ="Europe/Moscow"     # Europe/Moscow Asia/Yekaterinburg' >> ./srv1s/.env
   echo './srv1s/.env'
   cat ./srv1s/.env
-fi
-
-if [[ ! -f ./pgsql1s/.env ]]; then
-  touch ./pgsql1s/.env && \
-  echo 'TZ="Europe/Moscow"     # Europe/Moscow Asia/Yekaterinburg' >> ./pgsql1s/.env && \
-  echo 'PASS="password"        # Пароль пользователя postgres' >> ./pgsql1s/.env && \
-  echo 'SHEDULE="0 0 * * *"    # Расписание в формате cron * * * * *' >> ./pgsql1s/.env
-  echo './pgsql1s/.env'
-  cat ./pgsql1s/.env
 fi
 
 
