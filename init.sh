@@ -94,14 +94,14 @@ fi
 
 if [[ ! -f ./srv1s/.env ]]; then
   touch ./srv1s/.env && \
-  echo 'TZ="Europe/Moscow"     # Europe/Moscow Asia/Yekaterinburg' >> ./.env
+  echo 'TZ="Europe/Moscow"     # Europe/Moscow Asia/Yekaterinburg' >> ./srv1s/.env
   cat ./srv1s/.env
 fi
 
 if [[ ! -f ./pgsql1s/.env ]]; then
   touch ./pgsql1s/.env && \
-  echo 'TZ="Europe/Moscow"     # Europe/Moscow Asia/Yekaterinburg' >> ./.env && \
-  echo 'PASS="password"        # Пароль пользователя postgres' >> ./.env && \
-  echo 'SHEDULE="0 0 * * *"    # Расписание в формате cron * * * * *' >> ./.env
+  echo 'TZ="Europe/Moscow"     # Europe/Moscow Asia/Yekaterinburg' >> ./pgsql1s/.env && \
+  echo 'PASS="password"        # Пароль пользователя postgres' >> ./pgsql1s/.env && \
+  echo 'SHEDULE="0 0 * * *"    # Расписание в формате cron * * * * *' >> ./pgsql1s/.env
   cat ./pgsql1s/.env
 fi
