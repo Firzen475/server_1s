@@ -1,4 +1,17 @@
 #!/bin/bash
+
+if [ "$1" = "pgsql1s" ]; then
+  if [[ ! -f ./pgsql1s/.env ]]; then
+    touch ./pgsql1s/.env && \
+    echo 'TZ="Europe/Moscow"     # Europe/Moscow Asia/Yekaterinburg' >> ./pgsql1s/.env && \
+    echo 'PASS="password"        # Пароль пользователя postgres' >> ./pgsql1s/.env && \
+    echo 'SHEDULE="0 0 * * *"    # Расписание в формате cron * * * * *' >> ./pgsql1s/.env
+    echo './pgsql1s/.env'
+    cat ./pgsql1s/.env
+  fi
+  exit 0
+fi
+
 [ -d "./srv1s/distr/" ] || mkdir ./srv1s/distr/
 if [[ ! -n "$1" ]]; then
         echo "Не задано имя контроллера домена!"
