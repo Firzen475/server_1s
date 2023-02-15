@@ -82,7 +82,7 @@
 ``` mkdir /server_1s && git clone https://github.com/Firzen475/server_1s.git /server_1s ```
 
 ___
-## Подготовка сервера  
+## Подготовка сервеов  
 Следующий набор комманд устанавливает [Docker](https://docs.docker.com/engine/install/), [Docker-compouser](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-compose-on-ubuntu-20-04-ru), и скачивает проект с [github]().  
 ```bash
 sudo apt-get update && \
@@ -102,8 +102,7 @@ mkdir /server_1s/ && git clone https://github.com/Firzen475/server_1s.git /serve
 ```bash
 
 ```
-## Сервер 1С
-#### Настройка  
+#### Сервер 1С  
 1. Настройка файла [default-ssl.conf](./srv1s/apacheConf/default-ssl.conf)  
 Нужно добавить разделы Directory в соответствии с правилами:
 ```bash
@@ -146,6 +145,7 @@ ktpass.exe /crypto ALL /princ HTTP/srv1s.example.com@EXAMPLE.COM /mapuser usr1cv
 ```  
 где example.com и EXAMPLE.COM заменить на имя домена.  
 * Поместить файл usr1cv8.keytab в папку ./srv1s/root_srv1s/  
+  
 4. На хосте выполнить комманду:  
 ```chmod +x ./init.sh && ./init.sh [dc_name] [domain_name] [hasp_zip_password]```  
 * [dc_name]-имя контроллера домена  
@@ -158,17 +158,9 @@ ktpass.exe /crypto ALL /princ HTTP/srv1s.example.com@EXAMPLE.COM /mapuser usr1cv
 5. Скачать нужную версию сервера и закинуть в папку [distr](./srv1s/distr/)  
 В качестве сервера 1С используется версия [8.3.22](https://releases.1c.ru/project/Platform83) и выше. Следует использовать вариант "Технологическая платформа 1С:Предприятия (64-bit) для Linux".  
   
-#### Особенности обновления  
-Для обновления нужно:  
-* Скачать новую версию сервера и поместить в папку [distr](./srv1s/distr/)  
-В качестве сервера 1С используется версия [8.3.22](https://releases.1c.ru/project/Platform83) и выше. Следует использовать вариант "Технологическая платформа 1С:Предприятия (64-bit) для Linux".
-* Если после обновления базы пропали, нужно добавить их с помощью консоли администрирования. Названия можно получить на сервере pgsql1s:
-```bash
 
-```
 ___
-## База данных  
-#### Подготовка  
+#### Сервер Postgresql   
 Для формирования начальных дирректорий и файлов выполнить:  
 * ```chmod +x ./init.sh && ./init.sh```в случае запуска всех серверов на одном хосте.  
 * ```cd ./pgsql1s && chmod +x ./init.sh && ./init.sh```в случае запуска pgsql на отдельном хосте.  
@@ -190,16 +182,23 @@ ___
     └── run.sh
 ```  
 
-#### Особенности обновления  
-Для обновления нужно:  
-* получить ссылку на новую версию на сайте [Postgresql для 1С](https://postgrespro.ru/)
-* заменить ссылку в файле Dockerfile 
+ 
 ___
 
 
+#### Особенности обновления  
+Для обновления нужно:  
+* Скачать новую версию сервера и поместить в папку [distr](./srv1s/distr/)  
+В качестве сервера 1С используется версия [8.3.22](https://releases.1c.ru/project/Platform83) и выше. Следует использовать вариант "Технологическая платформа 1С:Предприятия (64-bit) для Linux".
+* Если после обновления базы пропали, нужно добавить их с помощью консоли администрирования. Названия можно получить на сервере pgsql1s:
+```bash
 
+```
 
-
+#### Особенности обновления  
+Для обновления нужно:  
+* получить ссылку на новую версию на сайте [Postgresql для 1С](https://postgrespro.ru/)
+* заменить ссылку в файле Dockerfile
 
 
 
