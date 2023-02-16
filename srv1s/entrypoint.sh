@@ -23,7 +23,7 @@ fi
 echo "Старт сервера лицензирования"
 /etc/init.d/haspd start 2>/dev/null >/dev/null
 /etc/init.d/haspd start
-
+echo "Старт сервера 1С"
 chown -R usr1cv8:grp1cv8 /opt/1cv8/
 chown -R usr1cv8:grp1cv8 /srvConfig/
 chown -R usr1cv8:grp1cv8 /home/usr1cv8/
