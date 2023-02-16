@@ -9,6 +9,7 @@ services:
     image: srv1s
     container_name: srv1s
     hostname: srv1s
+    privileged: true
     volumes:
       - root_srv1s:/root/
       - srvConfig:/srvConfig/
