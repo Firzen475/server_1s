@@ -18,8 +18,8 @@ if [ -f "/root/srv1s.crt" ] && [ -f "/root/srv1s.key" ] ; then
 fi
 echo "//////////////////"
 chown -R usr1cv8:grp1cv8 /opt/1cv8/*
-chown -R usr1cv8:grp1cv8 /srvConfig/*
 chown -R usr1cv8:grp1cv8 /srvConfig/
+chown -R usr1cv8:grp1cv8 /srvConfig/*
 chown -R usr1cv8:grp1cv8 /home/usr1cv8/
 chown -R usr1cv8:www-data /root/usr1cv8.keytab
 chmod 660 /root/usr1cv8.keytab
