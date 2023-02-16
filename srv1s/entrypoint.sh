@@ -19,8 +19,9 @@ fi
 echo "//////////////////"
 chown -R usr1cv8:grp1cv8 /opt/1cv8/*
 chown -R usr1cv8:grp1cv8 /srvConfig/
-chown -R usr1cv8:grp1cv8 /srvConfig/*
+[ "$(ls -A /srvConfig/)" ] && chown -R usr1cv8:grp1cv8 /srvConfig/*
 chown -R usr1cv8:grp1cv8 /home/usr1cv8/
+[ "$(ls -A /home/usr1cv8/)" ] && chown -R usr1cv8:grp1cv8 /home/usr1cv8/*
 chown -R usr1cv8:www-data /root/usr1cv8.keytab
 chmod 660 /root/usr1cv8.keytab
 su -s /bin/sh  - "usr1cv8" -c "export Environment=SRV1CV8_KEYTAB=/root/usr1cv8.keytab; export SRV1CV8_KEYTAB=/root/usr1cv8.keytab; $(find /opt/1cv8/x86_64/ -name ragent) -d /srvConfig/ -port 1540 -regport 1541 -range 1560:1591 -seclev 0 -pingPeriod 1000 -pingTimeout 5000"
