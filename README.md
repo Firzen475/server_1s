@@ -1,86 +1,10 @@
 # server_1s
 
-## Общее  
-В качестве сервера 1С используется версия [8.3.22](https://releases.1c.ru/project/Platform83) и выше. Следует использовать вариант "Технологическая платформа 1С:Предприятия (64-bit) для Linux".  
+## Описание  
+Для работы hasp+ ключей нужен сервер не выше версии [Ubuntu 20.04](https://releases.ubuntu.com/focal/ubuntu-20.04.5-live-server-amd64.iso), на более новых версиях тесты не проводились.  
+В качестве сервера 1С используется версия [8.3.22](https://releases.1c.ru/project/Platform83) и выше. Следует скачать вариант "Технологическая платформа 1С:Предприятия (64-bit) для Linux".  
 В качестве базы данных используется [Postgresql для 1С](https://postgrespro.ru/). Следует использовать вариант "Postgres Pro Standard".  
-
-Сервер разбит на 3 части:  
-* База данных  
-* Сервер 1с  
-* Сервер активации  
-
-Подразумивается, что каждый блок был установлен на разных виртуальных машинах. В случае, если планируется держать сервер на одной виртуальной машине, есть объединенный файл [docker-compouser](./docker-compose.yml) и [init](./init.sh) скрипт в корневой папке. Но такой режим рекомендуется использовать для тестовых целей.  
-Все образы оснащены системой healthcheck. В случае сбоя сервера он может быть перезапущен с помощью внешних компонент (Kubernetes)
-
-#### Дерево файлов  
-```bash
-/server_1s/  
-├── README.md  
-├── docker-compose.yml  
-├── init.sh # Скрипт подготовки для единого сервера  
-├── lic  
-│   ├── Dockerfile  
-│   ├── docker-compose.yml  
-│   ├── entrypoint.sh  
-│   ├── hasplm.conf  
-│   └── healthcheck.sh  
-├── pgsql1s  
-│   ├── Dockerfile  
-│   ├── docker-compose.yml  
-│   ├── entrypoint.sh  
-│   ├── init.sh # Скрипт подготовки для отдельного сервера pgsql  
-│   └── root  
-│       ├── backup.sh  
-│       ├── healthcheck.sh  
-│       └── run.sh  
-└── srv1s  
-    ├── Dockerfile 
-    ├── distr
-    │   └── server64_8_3_2X_XXXX.tar.gz
-    ├── apacheConf  
-    │   └── default-ssl.conf  
-    ├── apacheDir  
-    │   ├── database1  
-    │   │   └── default.vrd  
-    │   ├── database2  
-    │   │   └── default.vrd  
-    │   └── database3  
-    │       └── default.vrd  
-    ├── docker-compose.yml  
-    ├── entrypoint.sh  
-    ├── init.sh # Скрипт подготовки для отдельного сервера 1C  
-    ├── nethasp.ini  
-    ├── root_srv1s  
-    │   └── healthcheck.sh  
-    └── srv1s.conf  
-```  
-#### Общее дерево хранилищь  
-```bash
-/_1s/
-├── apacheConf
-│   └── default-ssl.conf
-├── apacheDir
-│   ├── database1
-│   │   └── default.vrd
-│   ├── database2
-│   │   └── default.vrd
-│   └── database3
-│       └── default.vrd
-├── backup
-├── database
-├── root_pgsql1s
-│   ├── backup.sh
-│   ├── healthcheck.sh
-│   └── run.sh
-├── root_srv1s
-│   ├── healthcheck.sh
-│   ├── srv1s.crt
-│   └── srv1s.key
-└── srvConfig
-```  
-#### Загрузка
-``` mkdir /server_1s && git clone https://github.com/Firzen475/server_1s.git /server_1s ```
-
+Все образы оснащены системой healthcheck. В случае сбоя сервера он может быть перезапущен с помощью внешних компонент (Kubernetes).  
 ___
 ## Подготовка сервеов  
 Следующий набор комманд устанавливает [Docker](https://docs.docker.com/engine/install/), [Docker-compouser](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-compose-on-ubuntu-20-04-ru), и скачивает проект с [github]().  
@@ -129,15 +53,17 @@ mkdir /server_1s/ && git clone https://github.com/Firzen475/server_1s.git /serve
                                                 # /_1s/apacheDir/databaseX/default.vrd
                 </Directory>
                 ...
-```
+```  
+
 2. В папке [apacheDir](./srv1s/apacheDir/) переименовать папки "databaseX" в соответствии с именами публикуемых баз в пункте 2. В файлах [default.vrd](./srv1s/apacheDir/database1/default.vrd) изменить строки:  
 ```
                 base="/databaseX"
                 ib="Srvr=&quot;srv1s&quot;;Ref=&quot;databaseX&quot;;">
 ```  
 на имя публикуемой базы.  
-3. Сгенерировать файл usr1cv8.keytab:
-* Создать пользователя usr1cv8 в домене
+
+3. Сгенерировать файл usr1cv8.keytab:  
+* Создать пользователя usr1cv8 в домене  
 * Создать usr1cv8.keytab на домене последовательностью команд:  
 ```bash 
 ktpass.exe /crypto ALL /princ usr1cv8/srv1s.example.com@EXAMPLE.COM /mapuser usr1cv8 /pass Password /out C:\usr1cv8_tmp.keytab /ptype KRB5_NT_PRINCIPAL
@@ -151,26 +77,18 @@ ktpass.exe /crypto ALL /princ HTTP/srv1s.example.com@EXAMPLE.COM /mapuser usr1cv
 * [dc_name]-имя контроллера домена  
 * [domain_name]-название домена  
 * [hasp_zip_password]-пароль от архива hasp.zip (Архив должен быть скопирован в /server_1s)  
-В результате получится дерево хранилища:
-```bash
 
-```  
 5. Скачать нужную версию сервера и закинуть в папку [distr](./srv1s/distr/)  
 В качестве сервера 1С используется версия [8.3.22](https://releases.1c.ru/project/Platform83) и выше. Следует использовать вариант "Технологическая платформа 1С:Предприятия (64-bit) для Linux".  
   
+В результате выполнения скрипта на отдельном хосте формируется следующее дерево:  
+```bash
 
+```  
 ___
 #### Сервер Postgresql  
 1. На хосте выполнить комманду:
 ```chmod +x ./init.sh && ./init.sh pgsql1s```  
-   
-
-В, созданном скриптом, файле .env нужно отредактировать переменные:  
-
-* TZ - Часовой пояс в формате Europe/Moscow  
-* PASS - пароль пользователя postgres (Пароль хранится в открытом виде!)  
-* SHEDULE - расписание выполнения бекапов в формате cron  
-
 В результате выполнения скрипта на отдельном хосте формируется следующее дерево:  
 ```bash
 /_1s/
@@ -185,25 +103,43 @@ ___
 
 ## Запуск контейнеров  
 #### Вариант для раздельных серверов (рекомендованный)  
-###### На сервере srv1s  
+###### Сервер 1С  
 1. В файле ./srv1s/.env установить часовой пояс:
 ```nano ./srv1s/.env```  
 2. Перейти в папку srv1s:
 ```cd ./srv1s/```  
 3. Запустить контейнер:  
 ```docker-compose down && docker-compose build --force-rm && docker-compose up -d```  
-###### На сервере pgsql1s  
+###### Сервер Postgresql  
+1. В файле ./srv1s/.env установить переменные:
+```nano ./srv1s/.env```  
+* TZ - Часовой пояс в формате Europe/Moscow  
+* PASS - пароль пользователя postgres (Пароль хранится в открытом виде!)  
+* SHEDULE - расписание выполнения бекапов в формате cron  
+2. Перейти в папку srv1s:
+```cd ./srv1s/```  
+3. Запустить контейнер:  
+```docker-compose down && docker-compose build --force-rm && docker-compose up -d```  
 
-#### Особенности обновления  
+#### Вариант для одного сервера (тестирование) 
+1. В файле ./srv1s/.env установить переменные:
+```nano ./.env```  
+* TZ - Часовой пояс в формате Europe/Moscow  
+* PASS - пароль пользователя postgres (Пароль хранится в открытом виде!)  
+* SHEDULE - расписание выполнения бекапов в формате cron  
+2. Запустить контейнер:  
+```docker-compose down && docker-compose build --force-rm && docker-compose up -d```  
+
+## Обновление
+#### 1C  
 Для обновления нужно:  
 * Скачать новую версию сервера и поместить в папку [distr](./srv1s/distr/)  
-В качестве сервера 1С используется версия [8.3.22](https://releases.1c.ru/project/Platform83) и выше. Следует использовать вариант "Технологическая платформа 1С:Предприятия (64-bit) для Linux".
-* Если после обновления базы пропали, нужно добавить их с помощью консоли администрирования. Названия можно получить на сервере pgsql1s:
+В качестве сервера 1С используется версия [8.3.22](https://releases.1c.ru/project/Platform83) и выше. Следует использовать вариант "Технологическая платформа 1С:Предприятия (64-bit) для Linux".  
+* Если после обновления базы пропали, нужно добавить их с помощью консоли администрирования. Названия можно получить на сервере pgsql1s:  
 ```bash
 
-```
-
-#### Особенности обновления  
+```  
+#### Postgresql  
 Для обновления нужно:  
 * получить ссылку на новую версию на сайте [Postgresql для 1С](https://postgrespro.ru/)
 * заменить ссылку в файле Dockerfile
