@@ -3,6 +3,9 @@
   <event>
    <eq property="name" value="CONN"/>
   </event>
+  <event>
+   <eq property="name" value="EXCP"/>
+  </event>
   <property name="all"/>
  </log>
 </config>
