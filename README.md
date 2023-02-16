@@ -21,7 +21,7 @@ sudo curl -L "https://github.com/docker/compose/releases/download/1.26.0/docker-
 sudo chmod +x /usr/local/bin/docker-compose && \
 mkdir /server_1s/ && git clone https://github.com/Firzen475/server_1s.git /server_1s && cd /server_1s && mkdir -p /server_1s/srv1s/distr/
 ```  
-```mv /home/user/hasp.zip ./ && mv /home/user/usr1cv8.keytab ./srv1s/root_srv1s/ && mv /home/user/server64* /server_1s/srv1s/distr/```
+```mv /home/user/hasp.zip ./ && mv /home/user/usr1cv8.keytab ./srv1s/root_srv1s/ && mv /home/user/server64* /server_1s/srv1s/distr/```  
 Получаем следующую структуру файлов:  
 ```bash
 
