@@ -15,6 +15,8 @@ if [ "$1" = "pgsql1s" ]; then
     echo './pgsql1s/.env'
     cat ./pgsql1s/.env
   fi
+  echo './pgsql1s/.env'
+  cat ./pgsql1s/.env
   exit 0
 fi
 
