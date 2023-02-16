@@ -104,16 +104,14 @@ if [[ ! -f ./.env ]]; then
   echo 'TZ="Europe/Moscow"     # Europe/Moscow Asia/Yekaterinburg' >> ./.env && \
   echo 'PASS="password"        # Пароль пользователя postgres' >> ./.env && \
   echo 'SHEDULE="0 0 * * *"    # Расписание в формате cron * * * * *' >> ./.env
-  echo './.env'
-  cat ./.env
 fi
-
+echo './.env'
+cat ./.env
 if [[ ! -f ./srv1s/.env ]]; then
   touch ./srv1s/.env && \
   echo 'TZ="Europe/Moscow"     # Europe/Moscow Asia/Yekaterinburg' >> ./srv1s/.env
-  echo './srv1s/.env'
-  cat ./srv1s/.env
 fi
-
+echo './srv1s/.env'
+cat ./srv1s/.env
 
 
