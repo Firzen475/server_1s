@@ -20,30 +20,15 @@ if [ -f "/root/srv1s.crt" ] && [ -f "/root/srv1s.key" ] ; then
         echo "Статус сервера:"
         /etc/init.d/apache2 status
 fi
-echo "Сборкаа сервера лицензирования"
-apt update && apt install dkms g++ libjansson-dev -y;
-cat << EOF > /etc/ld.so.conf.d/libc.conf
-# libc default configuration
-/usr/local/lib
-EOF
-ldconfig
-cp -fp /tmp/sbin/aksusbd_x86_64 /usr/sbin/
-cat << EOF > /etc/udev/rules.d/80-hasp.rules
-# HASP rules
-ACTION=="add|change|bind", SUBSYSTEM=="usb", ATTRS{idVendor}=="0529", ATTRS{idProduct}=="0001", MODE="664", ENV{HASP}="1", SYMLINK+="aks/hasp/%k", RUN+="/usr/sbin/$aksusbd_bin -c \$root/aks/hasp/\$kernel"
-ACTION=="remove", ENV{HASP}=="1", RUN+="/usr/sbin/$aksusbd_bin -r \$root/aks/hasp/\$kernel"
+echo "Старт сервера лицензирования"
+/etc/init.d/haspd start 2>/dev/null >/dev/null
+/etc/init.d/haspd start
+echo "Установка usbhaspinfo"
+cd /tmp/UsbHaspInfo/
+gcc -m32 -c *.c && gcc -m32 *.o libhasplnx.a -o usbhaspinfo
+cp ./usbhaspinfo /usr/sbin/
+usbhaspinfo
 
-# SENTINEL rules
-ACTION=="add|change|bind", SUBSYSTEM=="usb", ATTRS{idVendor}=="0529", ATTRS{idProduct}=="0003", KERNEL!="hiddev*", MODE="666", GROUP="plugdev", ENV{SENTINELHID}="1", SYMLINK+="aks/sentinelhid/%k"
-EOF
-
-/usr/sbin/aksusbd_x86_64 -d
-
-
-
-#echo "Старт сервера лицензирования"
-#/etc/init.d/haspd start 2>/dev/null >/dev/null
-#/etc/init.d/haspd start
 echo "Старт сервера 1С"
 chown -R usr1cv8:grp1cv8 /opt/1cv8/
 chown -R usr1cv8:grp1cv8 /srvConfig/
