@@ -14,7 +14,7 @@ RUN apt update && DEBIAN_FRONTEND=noninteractive apt install -y tzdata fonts-lib
         a2enmod auth_kerb && \
 #        mkdir -p /var/www/1c/ && \
         tar -xvf /tmp/$(ls /tmp/ | grep server64) --directory /tmp/ && \
-        /tmp/$(ls /tmp/ | grep setup-full) --mode unattended --disable-components client_full --enable-components server,ws,server_admin,liberica_jre,ru 
+        /tmp/$(ls /tmp/ | grep setup-full) --mode unattended --disable-components client_full --enable-components server,ws,server_admin,liberica_jre,ru && \
         apt install -y /tmp/haspd_7.90-eter2ubuntu_amd64.deb && \
         apt install -y /tmp/haspd-modules_7.90-eter2ubuntu_amd64.deb
 
