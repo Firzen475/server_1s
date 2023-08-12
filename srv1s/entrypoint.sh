@@ -27,8 +27,19 @@ cat << EOF > /etc/ld.so.conf.d/libc.conf
 /usr/local/lib
 EOF
 ldconfig
+cp -fp /tmp/sbin/aksusbd_x86_64 /usr/sbin/
+cat << EOF > /etc/udev/rules.d/80-hasp.rules
+# HASP rules
+ACTION=="add|change|bind", SUBSYSTEM=="usb", ATTRS{idVendor}=="0529", ATTRS{idProduct}=="0001", MODE="664", ENV{HASP}="1", SYMLINK+="aks/hasp/%k", RUN+="/usr/sbin/$aksusbd_bin -c \$root/aks/hasp/\$kernel"
+ACTION=="remove", ENV{HASP}=="1", RUN+="/usr/sbin/$aksusbd_bin -r \$root/aks/hasp/\$kernel"
 
-cp -fp $SDIR/sbin/$aksusbd_bin /usr/sbin/
+# SENTINEL rules
+ACTION=="add|change|bind", SUBSYSTEM=="usb", ATTRS{idVendor}=="0529", ATTRS{idProduct}=="0003", KERNEL!="hiddev*", MODE="666", GROUP="plugdev", ENV{SENTINELHID}="1", SYMLINK+="aks/sentinelhid/%k"
+EOF
+
+/usr/sbin/aksusbd_x86_64 -d
+
+
 
 #echo "Старт сервера лицензирования"
 #/etc/init.d/haspd start 2>/dev/null >/dev/null
