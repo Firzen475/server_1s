@@ -20,9 +20,19 @@ if [ -f "/root/srv1s.crt" ] && [ -f "/root/srv1s.key" ] ; then
         echo "Статус сервера:"
         /etc/init.d/apache2 status
 fi
-echo "Старт сервера лицензирования"
-/etc/init.d/haspd start 2>/dev/null >/dev/null
-/etc/init.d/haspd start
+echo "Сборкаа сервера лицензирования"
+apt update && apt install dkms g++ libjansson-dev -y;
+cat << EOF > /etc/ld.so.conf.d/libc.conf
+# libc default configuration
+/usr/local/lib
+EOF
+ldconfig
+
+cp -fp $SDIR/sbin/$aksusbd_bin /usr/sbin/
+
+#echo "Старт сервера лицензирования"
+#/etc/init.d/haspd start 2>/dev/null >/dev/null
+#/etc/init.d/haspd start
 echo "Старт сервера 1С"
 chown -R usr1cv8:grp1cv8 /opt/1cv8/
 chown -R usr1cv8:grp1cv8 /srvConfig/
